@@ -1,3 +1,4 @@
+%token IDENTIFIER
 
 /* description: Parses and executes mathematical expressions. */
 
@@ -17,8 +18,9 @@
 /lex
 
 %{
-    var Node = require('./Node.js');
-    var Element = require('./Element.js');
+    var Path = require('path');
+    var OpNode = require(Path.resolve('./OpNode.js'));
+    var NumNode = require(Path.resolve('./NumNode.js'));
 %}
 
 /* operator associations and precedence */
@@ -32,19 +34,21 @@
 
 expressions
     : e EOF
-        { console.log($$.process());}
+        {
+            var result = $$.process();
+            return result;
+        }
     ;
-
 e
     : e '+' e
-        {$$ = new Node(new Element('+'),$1,$3)}
+        {$$ = new OpNode('+',$1,$3)}
     | e '-' e
-        {$$ = new Node(new Element('-'),$1,$3)}
+        {$$ = new OpNode('-',$1,$3)}
     | e '*' e
-        {$$ = new Node(new Element('*'),$1,$3)}
+        {$$ = new OpNode('*',$1,$3)}
     | e '/' e
-        {$$ = new Node(new Element('/'),$1,$3)}
+        {$$ = new OpNode('/',$1,$3)}
     | NUMBER
-        {$$ = new Element(new Number(yytext));}
+        {$$ = new NumNode(Number(yytext));}
     ;
 
