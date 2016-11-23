@@ -25,7 +25,7 @@ describe('RootNode',function(){
 
 	it('should be able to evaluate the statement @x=2;x; and returns 2',function(){
 		var root = new RootNode();
-		root.addIdentifier('x',new NumNode(2));
+		root.addIdentifier(new Identifier('x'),new NumNode(2));
 		root.setTree(new Identifier('x'));
 
 		var expected = 2;
@@ -34,7 +34,7 @@ describe('RootNode',function(){
 
 	it('should be able to evaluate the statement @x=2;x+4; and returns 6',function(){
 		var root = new RootNode();
-		root.addIdentifier('x',new NumNode(2));
+		root.addIdentifier(new Identifier('x'),new NumNode(2));
 		root.setTree(new OpNode('+', new Identifier('x'), new NumNode(4)));
 
 		var expected = 6;
@@ -43,8 +43,8 @@ describe('RootNode',function(){
 
 	it('should be able to evaluate the statement @x=2;y=x+4;y-4; and returns 6',function(){
 		var root = new RootNode();
-		root.addIdentifier('x',new NumNode(2));
-		root.addIdentifier('y',new OpNode('+', new Identifier('x'), new NumNode(4)));
+		root.addIdentifier(new Identifier('x'),new NumNode(2));
+		root.addIdentifier(new Identifier('y'),new OpNode('+', new Identifier('x'), new NumNode(4)));
 		root.setTree(new OpNode('-', new Identifier('y'), new NumNode(4)));
 
 		var expected = 2;
@@ -53,9 +53,9 @@ describe('RootNode',function(){
 
 	it('should be able to evaluate the statement @x=10;y=20;z=30;(x^2)+(y^2)-(z^2); and returns 6',function(){
 		var root = new RootNode();
-		root.addIdentifier('x',new NumNode(10));
-		root.addIdentifier('y',new NumNode(20));
-		root.addIdentifier('z',new NumNode(30));
+		root.addIdentifier(new Identifier('x'),new NumNode(10));
+		root.addIdentifier(new Identifier('y'),new NumNode(20));
+		root.addIdentifier(new Identifier('z'),new NumNode(30));
 
 		var powerOf2 = function(identifier){
 			return new OpNode('^' , new Identifier(identifier), new NumNode(2));
