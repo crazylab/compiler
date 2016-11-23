@@ -1,5 +1,3 @@
-%token IDENTIFIER
-
 /* description: Parses and executes mathematical expressions. */
 
 /* lexical grammar */
@@ -7,11 +5,17 @@
 %%
 
 \s+                   /* skip whitespace */
+[a-z]+[0-9]*          return 'IDENTIFIER'
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 "+"					  return '+'
 "-"					  return '-'
 "*"					  return '*'
 "/"					  return '/'
+"="                   return '='
+"^"                   return '^'
+"("                   return '('
+")"                   return ')'
+";"                   return 'EOS'
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
 
@@ -21,34 +25,59 @@
     var Path = require('path');
     var OpNode = require(Path.resolve('./OpNode.js'));
     var NumNode = require(Path.resolve('./NumNode.js'));
+    var RootNode = require(Path.resolve('./RootNode.js'));
+    var Identifier = require(Path.resolve('./Identifier.js'));
+    var root = new RootNode();
 %}
 
 /* operator associations and precedence */
 
+%left '='
 %left  '-' '+'
 %left '*' '/'
+%left '^'
 
-%start expressions
+
+%start statements
 
 %% /* language grammar */
 
-expressions
-    : e EOF
-        {
-            var result = $$.process();
-            return result;
-        }
+statements
+    :   statement EOF
+            {return root.setTree($$);}
+    |   statement statements
     ;
-e
-    : e '+' e
-        {$$ = new OpNode('+',$1,$3)}
-    | e '-' e
-        {$$ = new OpNode('-',$1,$3)}
-    | e '*' e
-        {$$ = new OpNode('*',$1,$3)}
-    | e '/' e
-        {$$ = new OpNode('/',$1,$3)}
-    | NUMBER
-        {$$ = new NumNode(Number(yytext));}
+statement
+    :   exp EOS
+    |   variable EOS
     ;
-
+exp
+    :   NUMBER
+            {$$ = new NumNode(Number($1))}
+    |   exp '*' exp
+            {$$ = new OpNode($2, $1, $3)}
+    |   variable '*' exp
+            {$$ = new OpNode($2, $1, $3)}
+    |   exp '/' exp
+            {$$ = new OpNode($2, $1, $3)}
+    |   variable '/' exp
+            {$$ = new OpNode($2, $1, $3)}
+    |   exp '+' exp
+            {$$ = new OpNode($2, $1, $3)}
+    |   variable '+' exp
+            {$$ = new OpNode($2, $1, $3)}
+    |   exp '-' exp
+            {$$ = new OpNode($2, $1, $3)}
+    |   variable '-' exp
+            {$$ = new OpNode($2, $1, $3)}
+    |   exp '^' exp
+            {$$ = new OpNode($2, $1, $3)}
+    |   variable '^' exp
+            {$$ = new OpNode($2, $1, $3)}
+    |   variable '=' exp
+            {root.addIdentifier($1, $3)}
+    ;
+variable
+    :   IDENTIFIER
+            {$$ = new Identifier($1)}
+    ;

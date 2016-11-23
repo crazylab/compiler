@@ -1,3 +1,5 @@
+var operations = require('./operations.js');
+
 var OpNode = function(operator, left, right){
 	this.operator = operator;
 	this.left = left;
@@ -5,16 +7,8 @@ var OpNode = function(operator, left, right){
 }
 
 OpNode.prototype = {
-	process : function(){
-		var opToWord = {
-			'-' : 'minus',
-			'+' : 'plus',
-			'/' : 'divided by',
-			'*' : 'times'
-		}
-
-		var resultString = ['(', this.left.process(), opToWord[this.operator], this.right.process(), ')'].join(' ');
-		return resultString;
+	process : function(localVars){
+		return operations[this.operator](this.left.process(localVars),this.right.process(localVars));
 	}
 }
 

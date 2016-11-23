@@ -3,9 +3,9 @@ var OpNode = require('./OpNode.js');
 var NumNode = require('./NumNode.js');
 
 describe('OpNode', function(){
-	it('should be able to process parse tree and return expression with words', function(){
+	it('should be able to evaluate the parse tree', function(){
 		var parseTree = new OpNode('+', new OpNode('-', new NumNode(50), new NumNode(40)), new NumNode(10));
-		var expected = '( ( fifty minus forty ) plus ten )'
+		var expected = 20;
 
 		assert.equal(expected, parseTree.process());
 	});
@@ -17,8 +17,8 @@ describe('OpNode', function(){
 	})
 });
 
-describe('NumNode', function(){
-	it('should be able to get numbers in words', function(){
-		assert('fifty', new NumNode(50).process());
-	})
-});
+// describe('NumNode', function(){
+// 	it('should be able to get numbers in words', function(){
+// 		assert(50 , new NumNode(50).process());
+// 	})
+// });
