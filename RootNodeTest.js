@@ -8,14 +8,14 @@ var Identifier = require('./Identifier.js')
 
 
 describe('RootNode',function(){
-	it('should be able to evaluate the statement @2+3 and returns 5',function(){
+	it('should be able to evaluate the statement @2+3 and returns result',function(){
 		var root = new RootNode();
         var statement = new OpNode('+', new NumNode(2), new NumNode(3));
 
 		assert.equal(5, root.execute(statement));
 	});
 
-	it('should be able to evaluate the statement @(2*3)+3 and returns 9',function(){
+	it('should be able to evaluate the statement @(2*3)+3 and returns result',function(){
 		var root = new RootNode();
         var statement = new OpNode('+', new OpNode('*', new NumNode(2), new NumNode(3)), new NumNode(3));
 
@@ -29,7 +29,7 @@ describe('RootNode',function(){
         assert.equal(2, root.execute(xEquals2));
     });
 
-	it('should be able to evaluate the statement @x=2;x; and returns 2',function(){
+	it('should be able to evaluate the statement @x=2;x; and returns result',function(){
 		var root = new RootNode();
         var xEquals2 = new AssignmentNode(new Identifier('x'),new NumNode(2));
 
@@ -37,7 +37,7 @@ describe('RootNode',function(){
 		assert.equal(2, root.execute(new Identifier('x')));
 	});
 
-	it('should be able to evaluate the statement @x=2;x+4; and returns 6',function(){
+	it('should be able to evaluate the statement @x=2;x+4; and returns the result',function(){
 		var root = new RootNode();
         var xEquals2 = new AssignmentNode(new Identifier('x'),new NumNode(2));
 
@@ -47,7 +47,7 @@ describe('RootNode',function(){
 		assert.equal(6, root.execute(xPlus4));
 	});
 
-	it('should be able to evaluate the statement @x=2;y=x+4;y-4; and returns 6',function(){
+	it('should be able to evaluate the statement @x=2;y=x+4;y-4; and returns the result',function(){
 		var root = new RootNode();
         var xEquals2 = new AssignmentNode(new Identifier('x'),new NumNode(2));
         var yEqualsXPlus4 = new AssignmentNode(new Identifier('y'),new OpNode('+', new Identifier('x'), new NumNode(4)));
@@ -58,7 +58,7 @@ describe('RootNode',function(){
 		assert.equal(2, root.execute(yMinus4));
 	});
 
-	it('should be able to evaluate the statement @x=10;y=20;z=30;(x^2)+(y^2)-(z^2); and returns 6',function(){
+	it('should be able to evaluate the statement @x=10;y=20;z=30;(x^2)+(y^2)-(z^2); and returns the result',function(){
 		var root = new RootNode();
         var xEquals10 = new AssignmentNode(new Identifier('x'),new NumNode(10));
         var yEquals20 = new AssignmentNode(new Identifier('y'),new NumNode(20));
