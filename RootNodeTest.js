@@ -88,4 +88,26 @@ describe('RootNode',function(){
             assert.equal("The variable x is not diclared.", err)
         }
 	});
+
+    it('should be able to evaluate the statement @x=2;x=2^5;x; and returns the result',function(){
+        var root = new RootNode();
+        var xEquals2 = new AssignmentNode(new Identifier('x'),new NumNode(2));
+        var xPower5 = new AssignmentNode(new Identifier('x'),new OpNode('^', new Identifier('x'), new NumNode(5)));
+        var x = new Identifier('x');
+
+        assert.equal(2, root.execute(xEquals2));
+        assert.equal(32, root.execute(xPower5));
+        assert.equal(32, root.execute(x));
+    });
+
+    it('should be able to evaluate the statement @x=2;x=2^5;x; and returns the result',function(){
+        var root = new RootNode();
+        var xEquals2 = new AssignmentNode(new Identifier('x'),new NumNode(2));
+        var xPower5 = new AssignmentNode(new Identifier('x'),new OpNode('^', new Identifier('x'), new NumNode(5)));
+        var x = new Identifier('x');
+
+        assert.equal(2, root.execute(xEquals2));
+        assert.equal(32, root.execute(xPower5));
+        assert.equal(32, root.execute(x));
+    });
 });

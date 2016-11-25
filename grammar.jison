@@ -11,8 +11,9 @@
 "-"					          return '-'
 "*"					          return '*'
 "/"					          return '/'
-"="                   return '='
 "^"                   return '^'
+"!"                   return '!'
+"="                   return '='
 "("                   return '('
 ")"                   return ')'
 ";"                   return 'EOS'
@@ -24,10 +25,11 @@
 %{
     var Path = require('path');
     var OpNode = require(Path.resolve('./OpNode.js'));
+    var UnaryOpNode = require(Path.resolve('./UnaryOpNode.js'));
     var NumNode = require(Path.resolve('./NumNode.js'));
     var RootNode = require(Path.resolve('./RootNode.js'));
-    var AssignmentNode = require(Path.resolve('./AssignmentNode.js'));
     var Identifier = require(Path.resolve('./Identifier.js'));
+    var AssignmentNode = require(Path.resolve('./AssignmentNode.js'));
     var root = new RootNode();
 %}
 
@@ -37,7 +39,7 @@
 %left '-' '+'
 %left '*' '/'
 %left '^'
-
+%left '!'
 
 %start statements
 
@@ -71,4 +73,6 @@ exp
             {$$ = new OpNode($2, $1, $3)}
     |   exp '^' exp
             {$$ = new OpNode($2, $1, $3)}
+    |   exp '!'
+                {$$ = new UnaryOpNode($2, $1)}
     ;

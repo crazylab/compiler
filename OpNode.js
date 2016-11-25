@@ -1,4 +1,4 @@
-var operations = require('./operations.js');
+var operations = require('./operations.js').binary;
 
 var OpNode = function(operator, left, right){
 	this.operator = operator;
