@@ -1,4 +1,4 @@
-grammar.js
 exp
 .idea
 *.iml
+node_modules/

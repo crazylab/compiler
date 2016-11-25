@@ -1,8 +1,8 @@
 var assert = require('assert');
-var OpNode = require('./OpNode.js');
-var UnaryOpNode = require('./UnaryOpNode.js');
-var Identifier = require('./Identifier.js');
-var NumNode = require('./NumNode.js');
+var OpNode = require('../OpNode.js');
+var UnaryOpNode = require('../UnaryOpNode.js');
+var Identifier = require('../Identifier.js');
+var NumNode = require('../NumNode.js');
 
 describe('OpNode', function () {
     it('should be able to evaluate the parse tree', function () {
@@ -20,7 +20,7 @@ describe('OpNode', function () {
     });
 
     it('should be able to evaluate by getting value of identifier', function () {
-        var parseTree = new OpNode('+', new Identifier('x'),new NumNode(5));
+        var parseTree = new OpNode('+', new Identifier('x'), new NumNode(5));
         var context = {x: 5};
 
         var expected = 10;
