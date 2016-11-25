@@ -5,6 +5,8 @@
 %%
 
 \s+                   /* skip whitespace */
+"sin"                 return 'sin'
+"cos"                 return 'cos'
 [a-z]+[0-9]*          return 'IDENTIFIER'
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 "+"					          return '+'
@@ -39,6 +41,7 @@
 %left '-' '+'
 %left '*' '/'
 %left '^'
+%right 'sin' 'cos'
 %left '!'
 
 %start statements
@@ -74,5 +77,9 @@ exp
     |   exp '^' exp
             {$$ = new OpNode($2, $1, $3)}
     |   exp '!'
-                {$$ = new UnaryOpNode($2, $1)}
+            {$$ = new UnaryOpNode($2, $1)}
+    |  'sin' exp
+            {$$ = new UnaryOpNode($1, $2)}
+    |  'cos' exp
+            {$$ = new UnaryOpNode($1, $2)}
     ;

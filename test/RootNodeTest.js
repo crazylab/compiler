@@ -84,7 +84,7 @@ describe('RootNode', function () {
             root.execute(xTimes2);
             root.execute(xEquals3);
         } catch (err) {
-            assert.equal("The variable x is not diclared.", err)
+            assert.equal("x is not diclared.", err)
         }
     });
 

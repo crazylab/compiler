@@ -22,11 +22,17 @@ var unaryOperations = {
             result *= counter;
         }
         return result;
+    },
+    'sin': function (value) {
+        return Math.sin(value);
+    },
+    'cos': function (value) {
+        return Math.cos(value);
     }
 }
 
 var operations = {
-    binary : binaryOperations,
-    unary : unaryOperations
+    binary: binaryOperations,
+    unary: unaryOperations
 }
 module.exports = operations;

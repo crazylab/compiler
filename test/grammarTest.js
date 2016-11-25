@@ -50,13 +50,19 @@ describe('grammar', function () {
         try {
             parser.parse(input);
         } catch (err) {
-            assert.equal("The variable x is not diclared.", err)
+            assert.equal("x is not diclared.", err)
         }
     });
 
     it('@evaluate 3!;', function () {
         var input = '3!;';
         var expected = 6;
+        assert.equal(expected, parser.parse(input));
+    });
+
+    it('@evaluate sin 0;', function () {
+        var input = 'sin 0;';
+        var expected = 0;
         assert.equal(expected, parser.parse(input));
     });
 });
