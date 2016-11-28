@@ -14,7 +14,7 @@ var main = function () {
     rl.prompt();
     rl.on('line', function (expression) {
         try {
-            console.log(parser.parse(expression));
+            console.log('\x1b[33m%s\x1b[0m ', parser.parse(expression));
         } catch (error) {
             console.log(error);
         }
