@@ -1,5 +1,6 @@
 var jison = require("jison");
 var fs = require("fs");
+var RootNode = require('./Scope');
 
 const readLine = require('readline');
 const rl = readLine.createInterface({
@@ -8,13 +9,14 @@ const rl = readLine.createInterface({
 });
 
 var main = function () {
+    var root = new RootNode();
     var bnf = fs.readFileSync("./grammar.jison", "utf8");
     var parser = new jison.Parser(bnf);
 
     rl.prompt();
     rl.on('line', function (expression) {
         try {
-            console.log('\x1b[33m%s\x1b[0m ', parser.parse(expression));
+            console.log('\x1b[33m%s\x1b[0m ', root.execute(parser.parse(expression)));
         } catch (error) {
             console.log(error);
         }

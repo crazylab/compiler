@@ -29,10 +29,11 @@
     var OpNode = require(Path.resolve('./OpNode.js'));
     var UnaryOpNode = require(Path.resolve('./UnaryOpNode.js'));
     var NumNode = require(Path.resolve('./NumNode.js'));
-    var RootNode = require(Path.resolve('./RootNode.js'));
     var Identifier = require(Path.resolve('./Identifier.js'));
     var AssignmentNode = require(Path.resolve('./AssignmentNode.js'));
-    var root = new RootNode();
+    var Statements = require(Path.resolve('./Statements.js'));
+
+    var statements = new Statements();
 %}
 
 /* operator associations and precedence */
@@ -50,12 +51,12 @@
 
 statements
     :   statement EOF
-            {return root.execute($$);}
+            {return statements;}
     |   statement statements
     ;
 statement
     :   exp EOS
-          {root.execute($1)}
+          {statements.add($$);}
     ;
 exp
     :   NUMBER
