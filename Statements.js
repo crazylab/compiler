@@ -1,5 +1,6 @@
 var Statements = function () {
     this.statements = [];
+    this.head = 0;
 }
 
 Statements.prototype = {
@@ -8,11 +9,11 @@ Statements.prototype = {
     },
 
     next : function () {
-        return this.statements.shift();
+        return this.statements[this.head++];
     },
 
     hashNext : function () {
-        return this.statements.length != 0;
+        return this.head  < this.statements.length;
     }
 }
 
