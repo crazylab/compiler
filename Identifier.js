@@ -4,7 +4,7 @@ var Identifier = function(name){
 Identifier.prototype = {
 	process : function(context){
 		if(context[this.name] == undefined)
-		    throw [this.name,'is not diclared.'].join(' ');
+		    throw '%s is not diclared.'.replace('%s', this.name);
 		return context[this.name];
 	}
 }

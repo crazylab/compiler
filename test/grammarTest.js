@@ -73,4 +73,13 @@ describe('grammar', function () {
         var expected = 12;
         assert.equal(expected, root.execute(parser.parse(input)));
     });
+
+    it('@should throw exception x=10;x+2=3;', function () {
+        var input = 'x=10;x+2=3;';
+        try {
+            root.execute(parser.parse(input));
+        } catch (err) {
+            assert.equal("Invalid left-hand side in assignment", err)
+        }
+    });
 });

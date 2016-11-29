@@ -18,7 +18,7 @@ var main = function () {
         try {
             console.log('\x1b[33m%s\x1b[0m ', root.execute(parser.parse(expression)));
         } catch (error) {
-            console.log(error);
+            console.log('\033[31mERROR:', error, '\x1b[0m');
         }
         rl.prompt();
     });
